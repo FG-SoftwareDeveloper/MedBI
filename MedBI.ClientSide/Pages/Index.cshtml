@@ -1,0 +1,30 @@
+﻿@page
+@model IndexModel
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = "Dashboard";
+}
+
+<h2 class="mb-4 mt-4">Welcome to MedBI Dashboard</h2>
+
+<div class="row g-4">
+    <div class="col-md-6 col-xl-4">
+        <div class="card shadow-sm p-3">
+            <h5>Recent Claims</h5>
+            <p>Summary of your most recent activity.</p>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-4">
+        <div class="card shadow-sm p-3">
+            <h5>System Alerts</h5>
+            <p>No critical alerts. Systems are operational.</p>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-4">
+        <div class="card shadow-sm p-3">
+            <h5>Next Steps</h5>
+            <p>Review new tickets or manage user access logs.</p>
+        </div>
+    </div>
+</div>
+

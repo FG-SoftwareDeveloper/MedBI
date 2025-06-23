@@ -1,0 +1,103 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.dashboard-container {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.sidebar-full {
+    width:30px;
+    height: 100vh;
+    overflow-y: auto;
+    border-right: 1px solid #dee2e6;
+    background-color: #f8f9fa;
+    backdrop-filter: blur(5px);
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 26px;
+    box-shadow: 35px 35px 68px 0px rgba(246, 246, 246, 0.5), inset -8px -8px 16px 0px rgba(246, 246, 246, 0.6), inset 0px 11px 28px 0px rgb(255, 255, 255);
+}
+
+#sidebarMenu > div > ul > li {
+    border-radius: 26px;
+    padding: 10px 16px;
+    margin: 10px 0;
+    border: 1px solid rgba(200, 200, 200, 0.4);
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.1), /* outer shadow */
+    -4px -4px 12px rgba(255, 255, 255, 0.7), /* top-left glow */
+    inset 2px 2px 5px rgba(255, 255, 255, 0.5), /* inner highlights */
+    inset -2px -2px 5px rgba(0, 0, 0, 0.05); /* inner depth */
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+    /* Optional hover effect */
+    #sidebarMenu > div > ul > li:hover {
+        transform: translateY(-1px);
+        box-shadow: 6px 6px 14px rgba(0, 0, 0, 0.12), -4px -4px 10px rgba(255, 255, 255, 0.8), inset 1px 1px 4px rgba(255, 255, 255, 0.5), inset -1px -1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    #sidebarMenu > div > ul > li i:hover,
+    #sidebarMenu > div > ul > li svg:hover {
+        transform: translateY(-1px);
+        transition: all 0.2s ease-in-out;
+        box-shadow: 6px 6px 14px rgba(0, 0, 0, 0.12), -4px -4px 10px rgba(255, 255, 255, 0.8), inset 1px 1px 4px rgba(255, 255, 255, 0.5), inset -1px -1px 4px rgba(0, 0, 0, 0.06);
+        border-radius: 50%;
+        color: #0056b3;
+        padding: 6px;
+    }
+
+
+#sidebarMenu a {
+    text-decoration: none;
+    color: #939598; /* MedBI blue — feel free to adjust if needed */
+    font-weight: 500;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.2s ease-in-out;
+}
+
+    #sidebarMenu a:hover {
+        color: #0056b3; /* Slightly darker blue on hover for contrast */
+    }
+    #sidebarMenu a i {
+        font-size: 18px;
+        color: #939598;
+    }
+
+#sidebarMenu li.active a {
+    color: #ffffff;
+    background-color: #2874F0;
+    border-radius: 20px;
+    padding: 10px 16px;
+}
+
