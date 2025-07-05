@@ -1,5 +1,7 @@
 ﻿@{
     Layout = null;
+    var userRole = Context.Request.Cookies["userRole"] ?? "Anonymous";
+
 }
 
 <!DOCTYPE html>
@@ -26,7 +28,7 @@
         </nav>
 
         <!-- ✅ Sidebar Partial -->
-        <partial name="_SidebarMenu" />
+        <partial name="_SidebarMenu" for="@userRole" />
 
         <!-- ✅ Main Content -->
         <div class="flex-grow-1 p-4" style="min-height: 85vh;">

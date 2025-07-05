@@ -1,0 +1,45 @@
+﻿@page
+@model MedBI.ClientSide.Pages.Account.LoginModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login</h2>
+<a asp-page="/Account/Register">Register an account</a>
+
+<!-- Fix: Add asp-page-handler="Login" to call OnPostLoginAsync -->
+<form method="post" asp-page-handler="Login">
+    <div class="mb-3">
+        <label asp-for="Login.Role" class="form-label"></label>
+        <select asp-for="Login.Role" class="form-select">
+            <option value="">Select Role</option>
+            <option value="Admin">Admin</option>
+            <option value="Analyst">Analyst</option>
+            <option value="Customer">Customer</option>
+            <option value="Doctor">Doctor</option>
+        </select>
+        <span asp-validation-for="Login.Role" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Login.Username" class="form-label"></label>
+        <input asp-for="Login.Username" class="form-control" />
+        <span asp-validation-for="Login.Username" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Login.Email" class="form-label">Email</label>
+        <input asp-for="Login.Email" class="form-control" type="email" />
+        <span asp-validation-for="Login.Email" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Login.Password" class="form-label"></label>
+        <input asp-for="Login.Password" type="password" class="form-control" />
+        <span asp-validation-for="Login.Password" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+
+@if (Model.ErrorMessage != null)
+{
+    <div class="alert alert-danger mt-3">@Model.ErrorMessage</div>
+}

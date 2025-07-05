@@ -1,53 +1,20 @@
-﻿<!-- Sidebar -->
-<nav id="sidebarMenu" class="d-md-block bg-white sidebar collapse shadow-sm mt-4 rounded-3" style="  height: 95vh; overflow-y: auto;">
-    <div class="position-sticky pt-3">
-        <div class="text-center p-3 border-bottom">
-            <img src="/images/medbi-logo.svg" alt="MedBI Logo" class="img-fluid" style="max-height: 40px;" />
-        </div>
+﻿@model string
 
-        <ul class="nav flex-column">
+@inject MedBI.ClientSide.Services.NavigationApiService NavApiService
+
+@{
+    var navItems = await NavApiService.GetNavigationForRoleAsync(Model);
+}
+<nav id="sidebarMenu">
+    <ul class="nav flex-column">
+        @foreach (var item in navItems.OrderBy(x => x.Order))
+        {
             <li class="nav-item">
-                <a class="nav-link active d-flex align-items-center gap-2" asp-page="/IT/IT_Dash">
-                    <i class="bi bi-speedometer2"></i>
-                    Dashboard
+                <a class="nav-link d-flex align-items-center gap-2" asp-page="@item.PageUrl">
+                    <i class="@item.IconCssClass"></i>
+                    @item.Title
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" asp-page="/IT/AssignedTickets">
-                    <i class="bi bi-ticket-detailed"></i>
-                    Assigned Tickets
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" asp-page="/IT/AccessLogs">
-                    <i class="bi bi-journal-text"></i>
-                    Access Logs
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" asp-page="/IT/SystemStatus">
-                    <i class="bi bi-cpu"></i>
-                    Systems Status
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" asp-page="/IT/IssueTracker">
-                    <i class="bi bi-bug"></i>
-                    Issue Tracker
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" asp-page="/IT/TechHub">
-                    <i class="bi bi-diagram-3"></i>
-                    Tech Hub
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" asp-page="/IT/Support">
-                    <i class="bi bi-life-preserver"></i>
-                    Support
-                </a>
-            </li>
-        </ul>
-    </div>
+        }
+    </ul>
 </nav>

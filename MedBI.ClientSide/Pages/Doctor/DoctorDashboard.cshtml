@@ -1,0 +1,17 @@
+﻿@page
+@model MedBI.ClientSide.Pages.Doctor.DoctorDashboardModel
+@{
+    Layout = "_DashboardLayout";
+}
+<div class="row">
+    @foreach (var item in Model.NavItems.OrderBy(x => x.Order))
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm p-3">
+                <i class="@item.IconCssClass" style="font-size: 2rem; color: #0d6efd;"></i>
+                <h5 class="mt-2">@item.Title</h5>
+                <a asp-page="@item.PageUrl" class="btn btn-primary mt-2">Go</a>
+            </div>
+        </div>
+    }
+</div>
