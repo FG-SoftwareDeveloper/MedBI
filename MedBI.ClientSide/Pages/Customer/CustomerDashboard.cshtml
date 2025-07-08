@@ -1,19 +1,11 @@
 ﻿@page
-@model MedBI.ClientSide.Pages.Customer.CustomerDashboardModel
+@inject MedBI.ClientSide.Services.NavigationApiService NavigationService
+@model MedBI.ClientSide.Pages.Admin.AdminDashboard
+
 @{
-    Layout = "_DashboardLayout";
+    var navItems = await NavigationService.GetNavigationForRoleAsync("Customer");
 }
-<nav class="sidenav bg-light p-3" style="min-height: 100vh; width: 250px;">
-    <ul class="nav flex-column">
-    @foreach (var item in Model.NavItems.OrderBy(x => x.Order))
-    {
-        <li class="col-md-4 mb-4">
-            <a>
-                <i class="@item.IconCssClass" style="font-size: 2rem; color: #0d6efd;"></i>
-                <h5 class="mt-2">@item.Title</h5>
-                <a asp-page="@item.PageUrl" class="btn btn-primary mt-2">Go</a>
-            </a>
-        </li>
-    }
-    </ul>
-</nav>
+
+@await Html.PartialAsync("_SidebarMenu", navItems)
+
+

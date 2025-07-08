@@ -30,6 +30,8 @@ namespace MedBI.ClientSide.Pages.Account
 
             if (response.IsSuccessStatusCode)
             {
+                TempData["RegisterSuccess"] = "Registration successful! Please log in.";
+
                 return RedirectToPage("/Account/Login");
             }
             else

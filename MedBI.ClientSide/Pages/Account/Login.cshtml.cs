@@ -69,6 +69,8 @@ namespace MedBI.ClientSide.Pages.Account
                         return RedirectToPage("/Customer/CustomerDashboard");
                     else if (roles.Contains("Doctor"))
                         return RedirectToPage("/Doctor/DoctorDashboard");
+                    else if (roles.Contains("IT"))
+                        return RedirectToPage("/IT/IT_Dash");
                     else
                         return RedirectToPage("/Index");
                 }
