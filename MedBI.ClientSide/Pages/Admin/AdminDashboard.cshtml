@@ -1,9 +1,9 @@
 ﻿@page "/Admin/AdminDashboard"
-@model MedBI.ClientSide.Pages.Admin.AdminDashboard
+@inject MedBI.ClientSide.Services.NavigationApiService NavigationService   
+@model MedBI.ClientSide.Pages.Admin.AdminDashboard  
 
-@{
-    Layout = "_DashboardLayout";
-}
-<h2>Admin Dashboard</h2>
+@{  
+    var navItems = await NavigationService.GetNavigationForRoleAsync("Admin");  
+}  
 
-
+@await Html.PartialAsync("_SidebarMenu", navItems)  

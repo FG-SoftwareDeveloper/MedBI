@@ -3,7 +3,10 @@
 @{
     ViewData["Title"] = "Register";
 }
-
+@if (TempData["RegisterSuccess"] != null)
+{
+    <div class="alert alert-success mt-3">@TempData["RegisterSuccess"]</div>
+}
 <div class="container mt-5">
     <h2>Register</h2>
     <form method="post">
@@ -30,6 +33,7 @@
                 <option value="Analyst">Analyst</option>
                 <option value="Customer">Customer</option>
                 <option value="Doctor">Doctor</option>
+                <option value="IT">IT</option>
             </select>
             <span asp-validation-for="Register.Role" class="text-danger"></span>
         </div>

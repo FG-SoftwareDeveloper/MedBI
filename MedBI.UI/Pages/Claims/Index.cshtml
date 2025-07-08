@@ -1,0 +1,35 @@
+﻿@page
+@model MedBI.UI.Pages.Claims.IndexModel
+
+<h1>Claim List</h1>
+
+@if (Model.Claims != null && Model.Claims.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Claim ID</th>
+                <th>Diagnosis</th>
+                <th>Status</th>
+                <th>Amount</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var claim in Model.Claims)
+            {
+                <tr>
+                    <td>@claim.ClaimId</td>
+                    <td>@claim.Diagnosis</td>
+                    <td>@claim.Status</td>
+                    <td>@claim.Amount</td>
+                    <td>@claim.DateOfService.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No claims found.</p>
+}
