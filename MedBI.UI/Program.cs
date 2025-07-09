@@ -1,7 +1,5 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using MedBI.UI.Data;
 using MedBI.Data.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -20,6 +18,15 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<MedBIContext>();
 
+
+// ? Add HttpClient for API calls
+
+builder.Services.AddHttpClient("MedBI.API", client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("MedBI:ApiBaseUrl") ?? "https://localhost:5170/");
+});
+
+builder.Services.AddScoped<MedBI.UI.Services.ClaimApiService>();
 // ? Add Razor Pages
 builder.Services.AddRazorPages();
 

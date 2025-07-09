@@ -1,20 +1,62 @@
-﻿@model string
+﻿@using MedBI.ClientSide.Models
 
-@inject MedBI.ClientSide.Services.NavigationApiService NavApiService
+@model List<NavigationItem>
 
-@{
-    var navItems = await NavApiService.GetNavigationForRoleAsync(Model);
-}
-<nav id="sidebarMenu">
-    <ul class="nav flex-column">
-        @foreach (var item in navItems.OrderBy(x => x.Order))
-        {
-            <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" asp-page="@item.PageUrl">
-                    <i class="@item.IconCssClass"></i>
-                    @item.Title
-                </a>
-            </li>
-        }
-    </ul>
+<!-- Toggle button for mobile -->
+<nav class="navbar navbar-light d-md-none">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenuOffcanvas" aria-controls="sidebarMenuOffcanvas">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <span class="navbar-brand">MedBI</span>
+    </div>
 </nav>
+
+<!-- Sidebar for md+ -->
+<div class="sidebar-full d-none d-md-flex flex-column justify-content-between p-3" id="sidebarMenu">
+    <div>
+        <div class="mb-3 text-center">
+            <img src="~/images/Logo.png" alt="Logo" class="img-fluid" style="max-width: 150px; height: auto;" />
+        </div>
+        <ul class="nav flex-column">
+            @foreach (var item in Model)
+            {
+                <li class="nav-item mb-2">
+                    <a class="nav-link d-flex align-items-center gap-2 text-nowrap" asp-page="@item.PageUrl">
+                        <i class="@item.IconCssClass"></i>
+                        <span>@item.Title</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <footer class="border-top text-muted mt-3 pt-2 small">
+        <div class="text-center">
+            &copy; 2025 - MedBI.ClientSide -
+            <a asp-area="" asp-page="/Privacy" class="text-muted">Privacy</a>
+        </div>
+    </footer>
+</div>
+
+<!-- Offcanvas for mobile -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMenuOffcanvas">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">MedBI</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <ul class="nav flex-column">
+            @foreach (var item in Model)
+            {
+                <li class="nav-item mb-2">
+                    <a class="nav-link d-flex align-items-center gap-2" asp-page="@item.PageUrl">
+                        <i class="@item.IconCssClass"></i>
+                        <span>@item.Title</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+

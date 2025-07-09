@@ -1,11 +1,23 @@
 ﻿@page
+@using MedBI.ClientSide.Pages.Shared
 @inject MedBI.ClientSide.Services.NavigationApiService NavigationService
-@model MedBI.ClientSide.Pages.Admin.AdminDashboard
+@model MedBI.ClientSide.Pages.Customer.CustomerDashboardModel
 
 @{
     var navItems = await NavigationService.GetNavigationForRoleAsync("Customer");
+
 }
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-2">
+            @await Html.PartialAsync("_SidebarMenu", navItems)
+        </nav>
 
-@await Html.PartialAsync("_SidebarMenu", navItems)
-
-
+        <main class="col">
+            <div class="dashboard-gradient rounded-4 p-4">
+                @await Html.PartialAsync("_DashboardLayout", Model)
+            </div>
+            <!-- Other dashboard content can go here -->
+        </main>
+    </div>
+</div>

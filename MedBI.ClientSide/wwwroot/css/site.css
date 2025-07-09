@@ -32,52 +32,57 @@ html, body {
 }
 
 .sidebar-full {
-    width:30px;
     height: 100vh;
+    overflow-y: auto;
+    border-right: 1px solid #dee2e6;
+    background-color: #ffffff;
+    padding: 1rem;
+    /* width:225px;
+    height: 90vh;
+    margin-top:10px;
+    margin-bottom:10px;
+    margin-left:10px;
     overflow-y: auto;
     border-right: 1px solid #dee2e6;
     background-color: #f8f9fa;
     backdrop-filter: blur(5px);
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgba(255, 255, 255, .75);
     border-radius: 26px;
-    box-shadow: 35px 35px 68px 0px rgba(246, 246, 246, 0.5), inset -8px -8px 16px 0px rgba(246, 246, 246, 0.6), inset 0px 11px 28px 0px rgb(255, 255, 255);
+    box-shadow: 35px 35px 68px 0px rgba(246, 246, 246, 0.5), inset -8px -8px 16px 0px rgba(246, 246, 246, 0.6), inset 0px 11px 28px 0px rgb(255, 255, 255);*/
 }
-
 #sidebarMenu > div > ul > li {
-    border-radius: 26px;
+    border-radius: 16px;
     padding: 10px 16px;
     margin: 10px 0;
-    border: 1px solid rgba(200, 200, 200, 0.4);
-    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(12px);
-    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.1), /* outer shadow */
-    -4px -4px 12px rgba(255, 255, 255, 0.7), /* top-left glow */
-    inset 2px 2px 5px rgba(255, 255, 255, 0.5), /* inner highlights */
-    inset -2px -2px 5px rgba(0, 0, 0, 0.05); /* inner depth */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1), inset 1px 1px 3px rgba(255, 255, 255, 0.25), inset -1px -1px 2px rgba(0, 0, 0, 0.05);
     transition: all 0.2s ease-in-out;
     cursor: pointer;
 }
 
-    /* Optional hover effect */
     #sidebarMenu > div > ul > li:hover {
-        transform: translateY(-1px);
-        box-shadow: 6px 6px 14px rgba(0, 0, 0, 0.12), -4px -4px 10px rgba(255, 255, 255, 0.8), inset 1px 1px 4px rgba(255, 255, 255, 0.5), inset -1px -1px 4px rgba(0, 0, 0, 0.06);
+        /* No translate or scale for subtlety */
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255, 0.3);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15), 0 0 8px rgba(255, 255, 255, 0.4) inset;
     }
 
-    #sidebarMenu > div > ul > li i:hover,
-    #sidebarMenu > div > ul > li svg:hover {
-        transform: translateY(-1px);
+    #sidebarMenu > div > ul > li i,
+    #sidebarMenu > div > ul > li svg {
         transition: all 0.2s ease-in-out;
-        box-shadow: 6px 6px 14px rgba(0, 0, 0, 0.12), -4px -4px 10px rgba(255, 255, 255, 0.8), inset 1px 1px 4px rgba(255, 255, 255, 0.5), inset -1px -1px 4px rgba(0, 0, 0, 0.06);
-        border-radius: 50%;
-        color: #0056b3;
-        padding: 6px;
     }
 
+    #sidebarMenu > div > ul > li:hover i,
+    #sidebarMenu > div > ul > li:hover svg {
+        color: #0056b3;
+        filter: drop-shadow(0 0 4px rgba(0, 86, 179, 0.5));
+    }
 
 #sidebarMenu a {
     text-decoration: none;
-    color: #939598; /* MedBI blue — feel free to adjust if needed */
+    color: #939598;
     font-weight: 500;
     font-size: 15px;
     display: flex;
@@ -87,8 +92,9 @@ html, body {
 }
 
     #sidebarMenu a:hover {
-        color: #0056b3; /* Slightly darker blue on hover for contrast */
+        color: #0056b3;
     }
+
     #sidebarMenu a i {
         font-size: 18px;
         color: #939598;
@@ -96,8 +102,15 @@ html, body {
 
 #sidebarMenu li.active a {
     color: #ffffff;
-    background-color: #2874F0;
+    background: rgba(40, 116, 240, 0.5);
     border-radius: 20px;
     padding: 10px 16px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), inset 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+/* Background gradient for the dashboard area */
+.dashboard-gradient {
+    background: linear-gradient( to right, rgba(206, 214, 218, 0.59) 0%, rgba(241, 241, 241, 0.86) 34%, rgba(251, 251, 251, 1) 64%, rgba(252, 252, 253, 1) 87%, rgba(220, 227, 229, 0.75) 96%, rgba(196, 210, 219, 0.58) 98%, rgba(191, 206, 217, 0.55) 100% );
 }
 

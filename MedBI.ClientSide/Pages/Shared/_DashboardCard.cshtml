@@ -1,0 +1,9 @@
+﻿@model MedBI.ClientSide.Models.DashboardCardModel
+
+<div class="col-@Model.Width">
+    <div class="card shadow-sm p-3">
+        <h5>@Model?.Title ?? "No Title"</h5>
+        <p>@Model?.ContentHtml ?? "No description provided."</p>
+    </div>
+</div>
+

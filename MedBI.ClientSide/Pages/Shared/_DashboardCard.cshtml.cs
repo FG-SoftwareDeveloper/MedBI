@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MyApp.Namespace
+namespace MedBI.ClientSide.Pages.Shared
 {
-    public class SupportModel : PageModel
+    public class _DashboardCardModel : PageModel
     {
         public void OnGet()
         {
