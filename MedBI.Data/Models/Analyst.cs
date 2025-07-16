@@ -1,20 +1,30 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MedBI.Data.Models
 {
+    [Table("Analyst")]
     public class Analyst
     {
+        [Key]
+        [Column("AnalystId")]
         public int AnalystId { get; set; }
 
         [Required]
-        public string? FirstName { get; set; }
+        [Column("UserId")]
+        public required string UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public required ApplicationUser User { get; set; }
+
+        [Column("Department")]
+        public string? Department { get; set; }      // nullable in SQL
+
+        [Column("Specialty")]
+        public string? Specialty { get; set; }       // nullable in SQL
 
         [Required]
-        public string? LastName { get; set; }
-
-        public string? Email { get; set; }
-
-        // Optionally link to Claims or Reports if needed
-        // public ICollection<Claim> ClaimsReviewed { get; set; }
+        [Column("CreatedDate")]
+        public DateTime CreatedDate { get; set; }
     }
 }

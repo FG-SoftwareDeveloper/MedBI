@@ -17,7 +17,15 @@ builder.Services.AddHttpClient("MedBI.API", client =>
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<NavigationApiService>();
+builder.Services.AddScoped<PatientApiService>();
+builder.Services.AddAuthentication("Cookies")
+    .AddCookie("Cookies", options =>
+    {
+        options.LoginPath = "/Account/Login"; // Adjust as needed
+        options.AccessDeniedPath = "/Account/AccessDenied";
+    });
 
+builder.Services.AddAuthorization();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

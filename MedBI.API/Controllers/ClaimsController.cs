@@ -23,13 +23,13 @@ namespace MedBI.API.Controllers
         // GET: api/Claims with Filtering 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Claim>>> GetClaims(
-    [FromQuery] string? status,
-    [FromQuery] int? doctorId,
-    [FromQuery] int? patientId,
-    [FromQuery] string? sortBy = "dateOfService",
-    [FromQuery] string? sortOrder = "desc",
-    [FromQuery] int page = 1,
-    [FromQuery] int pageSize = 10)
+        [FromQuery] string? status,
+        [FromQuery] int? doctorId,
+        [FromQuery] int? patientId,
+        [FromQuery] string? sortBy = "dateOfService",
+        [FromQuery] string? sortOrder = "desc",
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 10)
         {
             var query = _context.Claims
                 .Include(c => c.Doctor)

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace MedBI.Data.Models
 {
@@ -10,8 +6,10 @@ namespace MedBI.Data.Models
     {
         public int Id { get; set; }
         public int NavigationItemId { get; set; }
-        public string RoleName { get; set; } = string.Empty;
+        public string RoleId { get; set; } = null!;
 
         public NavigationItem? NavigationItem { get; set; }
+
+
     }
 }
