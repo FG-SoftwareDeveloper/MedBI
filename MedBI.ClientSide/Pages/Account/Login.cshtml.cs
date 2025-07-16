@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using System.Security.Claims;
 
 namespace MedBI.ClientSide.Pages.Account
@@ -44,7 +42,8 @@ namespace MedBI.ClientSide.Pages.Account
             {
                 var result = await response.Content.ReadFromJsonAsync<LoginResponse>();
 
-                if (result is not null)
+
+                if (result is not null && !string.IsNullOrEmpty(result.Token))
                 {
                     var handler = new JwtSecurityTokenHandler();
                     var jwt = handler.ReadJwtToken(result.Token);
@@ -54,6 +53,17 @@ namespace MedBI.ClientSide.Pages.Account
                         .Select(c => c.Value)
                         .ToList();
 
+                    var userId = jwt.Claims
+                        .FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub)?.Value;
+
+                    // Replace the incorrect Append call with two separate calls for each cookie
+                    Response.Cookies.Append("userId", userId ?? string.Empty, new CookieOptions
+                    {
+                        HttpOnly = true,
+                        Secure = true,
+                        SameSite = SameSiteMode.Strict
+                    });
+                    
                     Response.Cookies.Append("jwtToken", result.Token, new CookieOptions
                     {
                         HttpOnly = true,
@@ -71,8 +81,15 @@ namespace MedBI.ClientSide.Pages.Account
                         return RedirectToPage("/Doctor/DoctorDashboard");
                     else if (roles.Contains("IT"))
                         return RedirectToPage("/IT/IT_Dash");
+                    else if (roles.Contains("Patient"))
+                        return RedirectToPage("/Patient/PatientDashboard");
                     else
                         return RedirectToPage("/Index");
+                }
+                else
+                {
+                    ErrorMessage = "Login failed: No token returned from API.";
+                    return Page();
                 }
             }
             else

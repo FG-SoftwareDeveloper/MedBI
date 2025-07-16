@@ -8,7 +8,7 @@ namespace MedBI.ClientSide.Pages.Shared
     {
         public List<DashboardCardModel> DashboardCards { get; set; } = new();
 
-        public async Task LoadDashboardCardsAsync()
+        public virtual async Task LoadDashboardCardsAsync()
         {
             // TEMPORARY STATIC CARDS FOR MVP
             DashboardCards = new List<DashboardCardModel>

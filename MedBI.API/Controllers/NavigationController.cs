@@ -19,13 +19,20 @@ namespace MedBI.API.Controllers
         [HttpGet("{role}")]
         public async Task<ActionResult<List<NavigationItem>>> GetNavigationItems(string role)
         {
-            var navItems = await _context.NavigationItemRoles
-                .Where(r => r.RoleName == role && r.NavigationItem != null)
-                .Select(r => r.NavigationItem!)
-                .OrderBy(n => n.Order)
-                .ToListAsync();
+            var navItems = await
+     (from navRole in _context.NavigationItemRoles
+      join dbRole in _context.Roles
+          on navRole.RoleId equals dbRole.Id
+      join navItem in _context.NavigationItems
+          on navRole.NavigationItemId equals navItem.Id
+      where dbRole.NormalizedName == role.ToUpper()
+      orderby navItem.Order
+      select navItem)
+     .ToListAsync();
+
 
             return Ok(navItems);
         }
+
     }
 }

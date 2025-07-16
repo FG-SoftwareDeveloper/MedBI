@@ -1,3 +1,4 @@
+using MedBI.Data;
 using MedBI.Data.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -7,6 +8,10 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// --------------------
+// AUTHENTICATION CONFIG
+// --------------------
 
 builder.Services.AddAuthentication(options =>
 {
@@ -23,28 +28,39 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true,
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
 
+// -------------------------
+// CONTROLLERS & JSON OPTIONS
+// -------------------------
 
-// Add services to the container
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
-        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.ReferenceHandler =
+            System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+
+        options.JsonSerializerOptions.Converters.Add(
+            new System.Text.Json.Serialization.JsonStringEnumConverter());
     });
 
-// Inject DbContext using connection string from appsettings.json
+// ---------------------
+// DATABASE & IDENTITY
+// ---------------------
+
 builder.Services.AddDbContext<MedBIContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MedBIDb")));
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<MedBIContext>()
     .AddDefaultTokenProviders();
 
-// Enable Swagger/OpenAPI
+// ----------------------
+// SWAGGER CONFIG
+// ----------------------
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -54,16 +70,37 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1",
         Description = "API for MedBI Claims, Doctors, Patients, and Documents"
     });
-});
 
-// (Optional) Handle JSON enum as strings
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
+    // Include Authorization in Swagger UI
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+        Description = "JWT Authorization header using the Bearer scheme.",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
     });
 
-// (Optional) CORS policy (if UI or external tools will consume API)
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
+
+// -------------------------
+// CORS POLICY (OPTIONAL)
+// -------------------------
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -76,7 +113,32 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Configure middleware
+// ---------------------------
+// RUN SEEDING LOGIC
+// ---------------------------
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var dbContext = services.GetRequiredService<MedBIContext>();
+    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+    try
+    {
+        await SeedData.InitializeAsync(services);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Seeding failed: {ex.Message}");
+        throw;
+    }
+}
+
+// ------------------------
+// MIDDLEWARE PIPELINE
+// ------------------------
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -90,6 +152,7 @@ app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

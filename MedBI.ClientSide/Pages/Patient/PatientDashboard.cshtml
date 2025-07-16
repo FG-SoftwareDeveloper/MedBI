@@ -1,0 +1,24 @@
+﻿@page
+@using MedBI.ClientSide.Pages.Shared
+@using Microsoft.AspNetCore.Authorization
+@inject MedBI.ClientSide.Services.NavigationApiService NavigationService
+@model MedBI.ClientSide.Pages.Patient.PatientDashboardModel
+@{
+    var navItems = await NavigationService.GetNavigationForRoleAsync("Patient");
+
+}
+<div class="container-fluid dashboard-gradient">
+    <div class="row">
+        <nav class="col-2">
+            @await Html.PartialAsync("_SidebarMenu", navItems)
+        </nav>
+
+        <main class="col">
+            <div class="rounded-4 p-4">
+                @await Html.PartialAsync("_DashboardLayout", Model)
+            </div>
+            <!-- Other dashboard content can go here -->
+        </main>
+    </div>
+</div>
+

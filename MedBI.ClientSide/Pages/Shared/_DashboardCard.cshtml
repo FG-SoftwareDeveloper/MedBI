@@ -1,9 +1,17 @@
 ﻿@model MedBI.ClientSide.Models.DashboardCardModel
 
-<div class="col-@Model.Width">
-    <div class="card shadow-sm p-3">
-        <h5>@Model?.Title ?? "No Title"</h5>
-        <p>@Model?.ContentHtml ?? "No description provided."</p>
+<div class="col-12 col-sm-6 col-md-@Model.Width mb-4">
+    <div class="card h-100 shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title text-primary fw-bold">
+                @(string.IsNullOrWhiteSpace(Model?.Title) ? "No Title" : Model.Title)
+            </h5>
+            <p class="card-text">
+                @Html.Raw(Model.ContentHtml)
+            </p>
+        </div>
     </div>
 </div>
+
+
 
